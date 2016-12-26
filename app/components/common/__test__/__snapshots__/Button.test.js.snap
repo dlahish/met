@@ -1,0 +1,53 @@
+exports[`test renders correctly 1`] = `
+<View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  hitSlop={undefined}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+      },
+      Array [
+        Object {
+          "alignSelf": "stretch",
+          "borderRadius": 5,
+          "flex": 1,
+          "height": 44,
+          "justifyContent": "center",
+          "overflow": "hidden",
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID={undefined}>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "fontSize": 18,
+          "margin": 5,
+          "textAlign": "center",
+        },
+        Object {
+          "color": "#000",
+        },
+      ]
+    }>
+    Button Text
+  </Text>
+</View>
+`;
