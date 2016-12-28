@@ -41,14 +41,14 @@ class Signin extends Component {
     if (this.props.isConnected) {
       this.setState({ isLoading: true })
   		this.props.signinAndAuthUser(this.state)
-  			.then(() => {
+  			// .then(() => {
   				if (!this.props.authError) {
   					this.setState({ isLoading: false, connectionMessage: '' })
   					Actions.home()
   				} else {
   					this.setState({ isLoading: false })
   				}
-  			})
+  			// })
       this.setState({ password: '' })
     } else {
       this.setState({ connectionMessage: 'Please connect to the internet' })

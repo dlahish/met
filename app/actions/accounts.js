@@ -1,4 +1,4 @@
-import { REMOVE_CURRENT_USER, SET_TOKEN, SET_AUTH_ERROR } from './../constants'
+import { REMOVE_CURRENT_USER, SET_TOKEN, SET_AUTH_ERROR, SIGN_IN } from './../constants'
 import { purgeStoredState } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
 import { getCurrencySymbol } from './settings'
@@ -18,12 +18,21 @@ import {
 
 import { getCategories } from './categories'
 
-function loadingActions(dispatch, token) {
-  let currentYear = new Date().getFullYear()
-  dispatch(setToken(token))
-  dispatch(getTransactions(currentYear, token))
-  dispatch(getCategories(token))
+export function loadingActions(token) {
+  return function(dispatch) {
+    let currentYear = new Date().getFullYear()
+    dispatch(setToken(token))
+    dispatch(getTransactions(currentYear, token))
+    dispatch(getCategories(token))
+  }
 }
+
+// function loadingActions(dispatch, token) {
+//   let currentYear = new Date().getFullYear()
+//   dispatch(setToken(token))
+//   dispatch(getTransactions(currentYear, token))
+//   dispatch(getCategories(token))
+// }
 
 function removeCurrentUser () {
   return {
@@ -52,19 +61,27 @@ export function checkIfAuthed() {
   }
 }
 
-export function signinAndAuthUser (credentials) {
-  return function (dispatch) {
-    return signin(credentials)
-      .then((res) => {
-        if (res.data.message) {
-          dispatch(setAuthError(res.data.message))
-        } else {
-          loadingActions(dispatch, res.data.token)
-        }
-      })
-      .catch((err) => console.warn(err))
+export function signinAndAuthUser(credentials) {
+  return {
+    type: SIGN_IN,
+    credentials
   }
 }
+
+// export function signinAndAuthUser (credentials) {
+//   return function (dispatch) {
+//     return signin(credentials)
+//       .then((res) => {
+//         console.log('response ------', res)
+//         if (res.data.message) {
+//           dispatch(setAuthError(res.data.message))
+//         } else {
+//           loadingActions(dispatch, res.data.token)
+//         }
+//       })
+//       .catch((err) => console.warn(err))
+//   }
+// }
 
 export function signupAndAuthUser (credentials) {
   return function (dispatch) {

@@ -92,6 +92,7 @@ class Transactions extends Component {
   }
 
   render() {
+    console.log('this.props.currencySymbol', this.props.currencySymbol)
     const p = this.props
     let transactionsToRender = searchTransactions(p.visibleTransactions, this.state.searchValue)
     transactionsToRender = sortTransactions(transactionsToRender,
@@ -206,7 +207,9 @@ Transactions.propTypes = {
   currentMonthName: PropTypes.string,
   currentMonthIndex: PropTypes.number,
   yearTotal: PropTypes.array,
-  currencySymbol: PropTypes.string,
+  currencySymbol: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number]),
   transactionsSearchValue: PropTypes.string,
   categoryIconIndex: PropTypes.object,
   forcedNewProps: PropTypes.bool

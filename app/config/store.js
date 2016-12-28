@@ -6,7 +6,13 @@ import { createEpicMiddleware } from 'redux-observable'
 import rootReducer from '../reducers'
 import rootEpic from '../epics'
 import createLogger from 'redux-logger'
-const logger = createLogger()
+const logger = createLogger({
+	predicate: (getState, action) => {
+		let routerActions = action.type !== 'REACT_NATIVE_ROUTER_FLUX_FOCUS' &&
+			action.type !== 'REACT_NATIVE_ROUTER_FLUX_JUMP'
+		return routerActions
+	}
+})
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
