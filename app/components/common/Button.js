@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableHighlight, Text, StyleSheet } from 'react-native'
+import { TouchableHighlight, Text, StyleSheet, View } from 'react-native'
 
 export default class Button extends Component {
   state = {
@@ -25,7 +25,7 @@ export default class Button extends Component {
         onShowUnderlay={this._onHighlight}
         style={[styles.button, this.props.style]}
         underlayColor="#a9d9d4">
-          <Text style={[styles.buttonText, colorStyle]}>{this.props.children}</Text>
+          <View style={[styles.buttonText, colorStyle]}>{this.props.children}</View>
       </TouchableHighlight>
     );
   }
@@ -41,7 +41,7 @@ var styles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonText: {
-    fontSize: 18,
+    // fontSize: 18,
     margin: 5,
     textAlign: 'center',
   }
