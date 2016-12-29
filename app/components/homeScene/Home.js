@@ -55,13 +55,13 @@ class Home extends Component {
               <ChangeMonthArrows
                 onPressLeft={() =>
                   this.props.actions.data.setMonth('previous',
-                                                    this.props.currentMonthIndex,
-                                                    this.props.yearTotal,
-                                                    this.props.transactions)}
+                    this.props.currentMonthIndex,
+                    this.props.yearTotal,
+                    this.props.transactions)}
                 onPressRight={() => this.props.actions.data.setMonth('next',
-                                                                      this.props.currentMonthIndex,
-                                                                      this.props.yearTotal,
-                                                                      this.props.transactions)}
+                    this.props.currentMonthIndex,
+                    this.props.yearTotal,
+                    this.props.transactions)}
               />
 
               <ProgressBar transactions={this.props.visibleTransactions}/>
