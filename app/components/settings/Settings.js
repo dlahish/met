@@ -25,6 +25,9 @@ class Settings extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.customFavorites !== nextProps.customFavorites) {
+      return
+    }
     if (this.props.sceneName === 'settings' && nextProps.sceneName === 'settings' ||
         this.props.sceneIndex === 3 && nextProps.sceneIndex === 3) {
       if (nextProps.isSyncSuccessful === 'syncing') {

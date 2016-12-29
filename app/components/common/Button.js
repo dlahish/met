@@ -25,7 +25,10 @@ export default class Button extends Component {
         onShowUnderlay={this._onHighlight}
         style={[styles.button, this.props.style]}
         underlayColor="#a9d9d4">
-          <View style={[styles.buttonText, colorStyle]}>{this.props.children}</View>
+          {/* <View style={[styles.buttonText, colorStyle]}>{this.props.children}</View> */}
+          <View style={styles.buttonWrapper}>
+            <Text style={styles.buttonText}>{this.props.children}</Text>
+          </View>
       </TouchableHighlight>
     );
   }
@@ -40,9 +43,11 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
+  buttonWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   buttonText: {
-    // fontSize: 18,
-    margin: 5,
-    textAlign: 'center',
+    fontSize: 18
   }
 })
