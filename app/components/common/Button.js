@@ -27,7 +27,9 @@ export default class Button extends Component {
         underlayColor="#a9d9d4">
           {/* <View style={[styles.buttonText, colorStyle]}>{this.props.children}</View> */}
           <View style={styles.buttonWrapper}>
-            <Text style={styles.buttonText}>{this.props.children}</Text>
+            {typeof this.props.children === 'string'
+              ? <Text style={styles.buttonText}>{this.props.children}</Text>
+              :  this.props.children}
           </View>
       </TouchableHighlight>
     );

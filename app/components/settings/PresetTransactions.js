@@ -44,7 +44,7 @@ export default class FavoriteTransaction extends Component {
         else if (selectedItemIndex !== null && itemIndex !== selectedItemIndex) this.setState({ selectedItemIndex: null})
         else this.setState({ selectedItemIndex: itemIndex })
     } else {
-        Actions.newTransaction({editMode: true, transaction})
+        // Actions.newTransaction({editMode: true, title: 'New Favorite Transaction', transaction})
     }
   }
 

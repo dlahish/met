@@ -105,6 +105,7 @@ export function addNewFavoriteTransaction(favTransaction) {
 }
 
 export function removeFavoriteTransaction(transaction) {
+  console.log('hello from remove favorite transaction ---', transaction)
   return {
     type: DELETE_FAVORITE_TRANSACTION,
     transaction
