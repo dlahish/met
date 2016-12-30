@@ -13,6 +13,7 @@ import {
   LoadingOverlay,
   ProgressBar
 } from '../../components'
+import HomeNavBar from './HomeNavBar'
 import * as accountActions from '../../actions/accounts'
 import * as dataActions from '../../actions/data'
 import * as formActions from '../../actions/form'
@@ -45,10 +46,11 @@ class Home extends Component {
     return (
       <View style={styles.container}>
 
-          <CustomNavBar
+          <HomeNavBar
             onLeftPress={() => {}}
             onRightPress={() => {}}
             title={this.props.currentMonthName}
+            currentMonthIndex={this.props.currentMonthIndex}
           />
 
           <View style={styles.monthSummary}>
