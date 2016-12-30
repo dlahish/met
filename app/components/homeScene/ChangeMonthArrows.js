@@ -33,17 +33,17 @@ export default class changeMonthArrows extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <Animated.View style={{transform: [{translateX: this.state.leftButtonAnim}]}}>
-              <TouchableOpacity onPress={() => this.onPress('left')} style={{paddingHorizontal: 5}}>
-                  {leftArrow}
-              </TouchableOpacity>
-          </Animated.View>
-          <View style={styles.seperator}/>
-          <Animated.View style={{transform: [{translateX: this.state.rightButtonAnim}]}}>
-              <TouchableOpacity onPress={() => this.onPress('right')} style={{paddingHorizontal: 5}}>
-                  {rightArrow}
-              </TouchableOpacity>
-          </Animated.View>
+        <Animated.View style={{transform: [{translateX: this.state.leftButtonAnim}]}}>
+            <TouchableOpacity onPress={() => this.onPress('left')} style={{paddingHorizontal: 5}}>
+                {leftArrow}
+            </TouchableOpacity>
+        </Animated.View>
+        <View style={styles.seperator}/>
+        <Animated.View style={{transform: [{translateX: this.state.rightButtonAnim}]}}>
+            <TouchableOpacity onPress={() => this.onPress('right')} style={{paddingHorizontal: 5}}>
+                {rightArrow}
+            </TouchableOpacity>
+        </Animated.View>
       </View>
     )
   }

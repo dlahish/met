@@ -6,8 +6,8 @@ export default class HomeNavBar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentMonthAnim: new Animated.Value(0),
-      nextMonthAnim: new Animated.Value(100)
+      currentMonthAnim: new Animated.Value(Dimensions.get('window').width / 2),
+      nextMonthAnim: new Animated.Value(Dimensions.get('window').width)
     }
     this.width = Dimensions.get('window').width
     this.months = ["January", "February", "March", "April", "May", "June",
@@ -15,23 +15,32 @@ export default class HomeNavBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.state.currentMonthAnim.setValue(0)
-    this.state.nextMonthAnim.setValue(100)
-    Animated.parallel([
-      Animated.timing(this.state.currentMonthAnim, { toValue: -250 }),
-      Animated.timing(this.state.nextMonthAnim, { toValue: 0 })
-    ]).start()
+    if (this.props.currentMonthIndex > nextProps.currentMonthIndex) {
+      this.state.currentMonthAnim.setValue(this.width / 2)
+      this.state.nextMonthAnim.setValue(this.width * -2)
+      Animated.parallel([
+        Animated.timing(this.state.currentMonthAnim, { toValue: this.width * 2 }),
+        Animated.timing(this.state.nextMonthAnim, { toValue: (this.width * -1) / 2 })
+      ]).start()
+    } else {
+      this.state.currentMonthAnim.setValue(this.width / 2)
+      this.state.nextMonthAnim.setValue(this.width)
+      Animated.parallel([
+        Animated.timing(this.state.currentMonthAnim, { toValue: this.width * -1 }),
+        Animated.timing(this.state.nextMonthAnim, { toValue: (this.width * -1) / 2 })
+      ]).start()
+    }
+
   }
 
   render() {
-    const nextMonth = this.props.currentMonthIndex <= 11 ? this.months[this.props.currentMonthIndex +1] : null
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.titleWrapper, {width: this.width, transform: [{translateX: this.state.currentMonthAnim}]}, addBorder(2, 'black')]}>
+        <Animated.View style={[styles.titleWrapper, {width: this.width, transform: [{translateX: this.state.currentMonthAnim}]}]}>
           <Text style={[styles.title]}>{this.months[this.props.currentMonthIndex]}</Text>
         </Animated.View>
-        <Animated.View style={[styles.titleWrapper, {transform: [{translateX: this.state.nextMonthAnim}]}, addBorder(2, 'red')]}>
-          <Text style={[styles.title]}>{nextMonth}</Text>
+        <Animated.View style={[styles.titleWrapper, {width: this.width, transform: [{translateX: this.state.nextMonthAnim}]}]}>
+          <Text style={[styles.title]}>{this.months[this.props.currentMonthIndex]}</Text>
         </Animated.View>
       </View>
     )
@@ -54,14 +63,12 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     paddingTop: 20,
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
   title: {
     position: 'relative',
-    // top: 25,
     textAlign: 'center',
     color: '#FFF',
     fontSize: 18,
