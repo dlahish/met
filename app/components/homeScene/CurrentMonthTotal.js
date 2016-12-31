@@ -41,7 +41,7 @@ export default class CurrentMonthTotal extends Component {
             <Text style={styles.text}>
               Income
             </Text>
-            <View>
+            <View onLayout={(e) => this.props.getLayoutXY(e)}>
               <Text style={styles.text}>
                 {getTotalBalace(this.props.transactions, 'income', this.props.currencySymbol)}
               </Text>
