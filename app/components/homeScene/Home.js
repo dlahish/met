@@ -14,6 +14,7 @@ import {
   ProgressBar
 } from '../../components'
 import HomeNavBar from './HomeNavBar'
+import FavBox from './FavBox'
 import * as accountActions from '../../actions/accounts'
 import * as dataActions from '../../actions/data'
 import * as formActions from '../../actions/form'
@@ -24,7 +25,8 @@ class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-			isLoading: false
+			isLoading: false,
+      incomeXY: {x: null, y: null}
     }
   }
 
@@ -42,7 +44,15 @@ class Home extends Component {
     this.props.actions.data.addNewFavoriteTransaction(favTransaction)
   }
 
+  getLayoutXY = (event) => {
+    const {x, y, width, height} = event.nativeEvent.layout
+    this.setState({
+      incomeXY: {x, y}
+    })
+  }
+
   render() {
+    console.log('HOME - render, this.state', this.state)
     return (
       <View style={styles.container}>
 
@@ -71,6 +81,7 @@ class Home extends Component {
               <CurrentMonthTotal
                 currencySymbol={this.props.currencySymbol}
                 transactions={this.props.visibleTransactions}
+                getLayoutXY={this.getLayoutXY}
               />
           </View>
 
@@ -83,6 +94,9 @@ class Home extends Component {
                 favoriteTransactions={this.props.favoriteTransactions}
                 onAddNewFavortieTransaction={this.onAddNewFavortieTransaction}
                 customFavorites={this.props.customFavorites}
+              />
+              <FavBox
+                incomeXY={this.state.incomeXY}
               />
           </View>
 
