@@ -27,19 +27,25 @@ export default class FavBox extends Component {
     })
   }
 
-  getAnimStyle = (i) => {
-    const xToIncom = this.props.incomeXY.x - this.state.boxXY.x,
-          yToIncom = this.props.incomeXY.y - this.state.boxXY.y
+  getAnimStyle = (amount) => {
+    let targetX, targetY
+    if (amount > 0) {
+      targetX = this.props.incomeXY.x - this.state.boxXY.x
+      targetY = this.props.incomeXY.y - this.state.boxXY.y
+    } else {
+      targetX = this.props.expenseXY.x - this.state.boxXY.x
+      targetY = this.props.expenseXY.y - this.state.boxXY.y
+    }
     return {
       transform: [
         {translateX: this.state.boxAnim.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, xToIncom]
+            outputRange: [0, targetX]
           })
         },
         {translateY: this.state.boxAnim.interpolate({
           inputRange: [0, 1],
-          outputRange: [0, yToIncom]
+          outputRange: [0, targetY]
         })},
         {scale: this.state.boxScale.interpolate({
           inputRange: [0, 1],
@@ -54,6 +60,7 @@ export default class FavBox extends Component {
       Animated.timing(this.state.boxAnim, { toValue: 1, duration: 600 }),
       Animated.timing(this.state.boxScale, { toValue: 1, duration: 600 })
     ]).start(() => {
+      this.props.onBoxPress()
       this.state.boxAnim.setValue(0)
       Animated.spring(this.state.boxScale, {
         toValue: 0,
@@ -67,7 +74,7 @@ export default class FavBox extends Component {
       <TouchableOpacity onPress={() => this.onBoxPress()}>
         <Animated.View
           ref='box'
-          style={[styles.box, this.getAnimStyle(1)]}
+          style={[styles.box, this.getAnimStyle(this.props.info)]}
           onLayout={(e) => this.getLayoutXY(e,1)}>
           <Text style={styles.text}>{this.props.text} - {this.props.info}</Text>
         </Animated.View>

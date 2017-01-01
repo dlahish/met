@@ -92,7 +92,6 @@ class Transactions extends Component {
   }
 
   render() {
-    console.log('this.props.currencySymbol', this.props.currencySymbol)
     const p = this.props
     let transactionsToRender = searchTransactions(p.visibleTransactions, this.state.searchValue)
     transactionsToRender = sortTransactions(transactionsToRender,
