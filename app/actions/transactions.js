@@ -4,11 +4,6 @@ import {
   UPDATE_TRANSACTION
 } from './../constants'
 
-import {
-  setVisibleTransactions,
-  getVisibleTransactions
-} from './data'
-
 function saveNewTransaction(transaction) {
   let transactionToReducer = {
     date: new Date(transaction.date).toISOString(),

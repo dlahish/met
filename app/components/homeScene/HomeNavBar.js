@@ -15,6 +15,9 @@ export default class HomeNavBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.currentMonthIndex === nextProps.currentMonthIndex) {
+      return
+    }
     if (this.props.currentMonthIndex > nextProps.currentMonthIndex) {
       this.state.currentMonthAnim.setValue(this.width / 2)
       this.state.nextMonthAnim.setValue(this.width * -2)

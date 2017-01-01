@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { View, Text, TouchableHighlight, StyleSheet, ScrollView } from 'react-native'
 import { ListItem } from '../../components'
 import { Actions } from 'react-native-router-flux'
+import FavBox from './FavBox'
 
 function renderFavoriteTransactions(favTransaction, i, onAddNewFavortieTransaction,
-favTransactionsLength, customFavorites) {
+favTransactionsLength, customFavorites, incomeXY, expenseXY) {
   onItemPress = (favTransaction) => {
     if (customFavorites) {
       let customFavTransaction = favTransaction
@@ -18,7 +19,7 @@ favTransactionsLength, customFavorites) {
         iconColor = getAddButtonColor(favTransaction)
   return (
       <View key={i}>
-          <ListItem
+          {/* <ListItem
             icon='plus'
             iconStyle={{color: iconColor}}
             text={favTransactionText}
@@ -26,16 +27,23 @@ favTransactionsLength, customFavorites) {
             styleInfo={{color: iconColor}}
             underlayColor="#a9d9d4"
             onPress={() => onItemPress(favTransaction)}
+          /> */}
+          <FavBox
+            incomeXY={incomeXY}
+            expenseXY={expenseXY}
+            text={favTransactionText}
+            info={favTransaction.amount}
+            onBoxPress={() => onItemPress(favTransaction)}
           />
 
-          {favTransactionsLength < 5 && i === favTransactionsLength-1 ?
+          {/* {favTransactionsLength < 5 && i === favTransactionsLength-1 ?
             <ListItem
               icon='plus'
               iconStyle={{opacity: 0.6}}
               text='Add new preset transaction'
               styleText={{opacity: 0.6}}
               onPress={() => Actions.presetTransactions()}
-            /> : null}
+            /> : null} */}
       </View>
   )
 }
@@ -53,18 +61,19 @@ function getAddButtonColor(favTransaction) {
 export default DisplayFavoriteTransactions = (props) => {
   const p = props
   return (
-    <ScrollView>
+    <View style={styles.favBoxes}>
       {p.favoriteTransactions.length > 0
         ? p.favoriteTransactions.map((transaction, i) => {
             return renderFavoriteTransactions(transaction,
-              i, p.onAddNewFavortieTransaction, p.favoriteTransactions.length, p.customFavorites)
+              i, p.onAddNewFavortieTransaction, p.favoriteTransactions.length, p.customFavorites,
+              p.incomeXY, p.expenseXY)
           })
         : <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
             <View style={styles.messageBox}>
               <Text style={{fontSize: 15}}>Go to setting to add favorite transactions</Text>
             </View>
           </View>}
-    </ScrollView>
+    </View>
   )
 }
 
@@ -81,5 +90,14 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: 'black',
     padding: 10
+  },
+  favBoxes: {
+    // borderWidth: 1,
+    // borderColor: 'black',
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }
 })
