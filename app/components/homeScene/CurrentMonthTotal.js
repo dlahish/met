@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native'
 import I18n from 'react-native-i18n'
 import ReactNativeI18n from 'react-native-i18n'
 
-function getTotalBalace(transactions, type, currencySymbol) {
+function getTotalBalace(transactions, type, currencySymbol, returnNumber) {
   let totalBalance = 0, income = 0, expense = 0
   transactions.forEach((transaction) => {
     if (transaction.type === 'Income') income += transaction.amount
@@ -14,11 +14,15 @@ function getTotalBalace(transactions, type, currencySymbol) {
   if (type === 'income') totalBalance = income
   else if (type === 'expense') totalBalance = expense
   else totalBalance = income - expense
-  return I18n.toCurrency(totalBalance,
-    {unit: getSymbol(currencySymbol),
-    format: "%u %n",
-    sign_first: false,
-    precision: 0})
+  if (returnNumber) {
+    return totalBalance
+  } else {
+    return I18n.toCurrency(totalBalance,
+      {unit: getSymbol(currencySymbol),
+      format: "%u %n",
+      sign_first: false,
+      precision: 0})
+  }
 }
 
 function getSymbol(symbol) {
@@ -31,25 +35,39 @@ export default class CurrentMonthTotal extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      amount: new Animated.Value(0),
-      fontWeight: '400'
+      incomeAmount: new Animated.Value(0),
+      expenseAmount: new Animated.Value(0),
+      incomeFontWeight: '400',
+      expenseFontWeight: '400'
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.transactions !== nextProps.transactions) {
-      this.setState({ fontWeight: '700' })
-      Animated.timing(this.state.amount, { toValue: 1, duration: 200 })
-        .start(() => {
-          Animated.timing(this.state.amount, { toValue: 0, duration: 200 })
-            .start(() => this.setState({ fontWeight: '400'}))
-        })
+      const nextIncome = getTotalBalace(nextProps.transactions, 'income', null, true)
+      const income = getTotalBalace(this.props.transactions, 'income', null, true)
+      if (income !== nextIncome) {
+        this.setState({ incomeFontWeight: '700' })
+        Animated.timing(this.state.incomeAmount, { toValue: 1, duration: 200 })
+          .start(() => {
+            Animated.timing(this.state.incomeAmount, { toValue: 0, duration: 200 })
+              .start(() => this.setState({ incomeFontWeight: '400'}))
+          })
+      } else {
+        this.setState({ expenseFontWeight: '700' })
+        Animated.timing(this.state.expenseAmount, { toValue: 1, duration: 200 })
+          .start(() => {
+            Animated.timing(this.state.expenseAmount, { toValue: 0, duration: 200 })
+              .start(() => this.setState({ expenseFontWeight: '400'}))
+          })
+      }
+
     }
   }
 
-  getViewAnim = () => {
+  getViewAnim = (type) => {
     return {transform: [
-      {scale: this.state.amount.interpolate({
+      {scale: this.state[type].interpolate({
         inputRange: [0, 1],
         outputRange: [1, 1.05]
       })}
@@ -57,7 +75,6 @@ export default class CurrentMonthTotal extends Component {
   }
 
   render() {
-    console.log('this.state.amount', this.state.amount)
     return (
       <View style={styles.container}
         ref={(CurrentMonthTotal) => { this.CurrentMonthTotal = CurrentMonthTotal}}
@@ -68,23 +85,23 @@ export default class CurrentMonthTotal extends Component {
 
           <View style={styles.line}></View>
 
-          <Animated.View style={[styles.textContainer, this.getViewAnim()]} ref='view22'>
-            <Text style={[styles.text, {fontWeight: this.state.fontWeight}]}>
+          <Animated.View style={[styles.textContainer, this.getViewAnim('incomeAmount')]} ref='view22'>
+            <Text style={[styles.text, {fontWeight: this.state.incomeFontWeight}]}>
               Income
             </Text>
             <View>
-              <Text style={[styles.text, {fontWeight: this.state.fontWeight}]} ref='incomeAmount'>
+              <Text style={[styles.text, {fontWeight: this.state.incomeFontWeight}]} ref='incomeAmount'>
                 {getTotalBalace(this.props.transactions, 'income', this.props.currencySymbol)}
               </Text>
             </View>
           </Animated.View>
 
-          <Animated.View style={[styles.textContainer, this.getViewAnim()]} ref='view22'>
-            <Text style={styles.text}>
+          <Animated.View style={[styles.textContainer, this.getViewAnim('expenseAmount')]} ref='view22'>
+            <Text style={[styles.text, {fontWeight: this.state.expenseFontWeight}]}>
               Expense
             </Text>
             <View>
-              <Text style={[styles.text, {fontWeight: this.state.fontWeight}]} ref='expenseAmount'>
+              <Text style={[styles.text, {fontWeight: this.state.expenseFontWeight}]} ref='expenseAmount'>
                 {getTotalBalace(this.props.transactions, 'expense', this.props.currencySymbol)}
               </Text>
             </View>

@@ -33,6 +33,7 @@ favTransactionsLength, customFavorites, incomeXY, expenseXY) {
             expenseXY={expenseXY}
             text={favTransactionText}
             info={favTransaction.amount}
+            color={iconColor}
             onBoxPress={() => onItemPress(favTransaction)}
           />
 
@@ -92,12 +93,10 @@ const styles = StyleSheet.create({
     padding: 10
   },
   favBoxes: {
-    // borderWidth: 1,
-    // borderColor: 'black',
     flex: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
   }
 })
