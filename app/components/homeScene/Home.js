@@ -30,7 +30,6 @@ class Home extends Component {
       incomeXY: {x: null, y: null},
       expenseXY: {x: null, y: null}
     }
-    this.boxes = [1,2,3,4,5]
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,15 +50,14 @@ class Home extends Component {
     const handleIncome = findNodeHandle(this.CurrentMonthTotal.refs.incomeAmount)
     const handleExpense = findNodeHandle(this.CurrentMonthTotal.refs.expenseAmount)
     RCTUIManager.measure(handleIncome, (x, y, width, height, pageX, pageY) => {
-      this.setState({ incomeXY: { x: pageX, y: pageY - 10 } })
+      this.setState({ incomeXY: { x: pageX, y: pageY } })
     })
     RCTUIManager.measure(handleExpense, (x, y, width, height, pageX, pageY) => {
-      this.setState({ expenseXY: { x: pageX, y: pageY - 10 } })
+      this.setState({ expenseXY: { x: pageX, y: pageY } })
     })
   }
 
   render() {
-    console.log('HOME - render, this.state', this.state)
     return (
       <View style={styles.container}>
 

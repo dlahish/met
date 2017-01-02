@@ -49,7 +49,7 @@ export default class FavoriteTransaction extends Component {
   }
 
   onPlusIconPress = () => {
-    if (this.props.favoriteTransactions === null || this.props.favoriteTransactions.length < 5) {
+    if (this.props.favoriteTransactions === null || this.props.favoriteTransactions.length < 8) {
       Actions.newTransaction({title: 'New Favorite Transaction'})
     } else {
       this.setModalVisible(true)

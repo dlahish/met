@@ -19,11 +19,21 @@ export default class FavBox extends Component {
     }
   }
 
-  getLayoutXY = (event) => {
-    var view = this.refs.box
-    var handle = findNodeHandle(view);
+  componentWillReceiveProps(nextProps) {
+    var handle = findNodeHandle(this.refs.box);
     RCTUIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
-       this.setState({ boxXY: {x: pageX, y: pageY} })
+      if (this.state.boxXY.x !== pageX || this.state.boxXY.y !== pageY) {
+        if (this.state.width === width) {
+          this.setState({ boxXY: {x: pageX, y: pageY} })
+        }
+      }
+    })
+  }
+
+  getLayoutXY = (event) => {
+    var handle = findNodeHandle(this.refs.box);
+    RCTUIManager.measure(handle, (x, y, width, height, pageX, pageY) => {
+      this.setState({ boxXY: {x: pageX, y: pageY}, width })
     })
   }
 
@@ -74,9 +84,9 @@ export default class FavBox extends Component {
       <TouchableOpacity onPress={() => this.onBoxPress()}>
         <Animated.View
           ref='box'
-          style={[styles.box, this.getAnimStyle(this.props.info)]}
+          style={[styles.box, {backgroundColor: this.props.color}, this.getAnimStyle(this.props.info)]}
           onLayout={(e) => this.getLayoutXY(e,1)}>
-          <Text style={styles.text}>{this.props.text} - {this.props.info}</Text>
+          <Text style={styles.text}>{this.props.text} {this.props.info}</Text>
         </Animated.View>
       </TouchableOpacity>
     )
@@ -89,7 +99,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     backgroundColor: 'pink',
     borderRadius: 3,
-    padding: 5
+    padding: 5,
+    margin: 5
   },
   text: {
     fontSize: 18
