@@ -88,8 +88,8 @@ export function setCurrentMonth(monthIndex = new Date().getMonth()) {
   }
 }
 
-function setFavoriteTransaction(transaction, favoriteTransactionsId) {
-  transaction.id = favoriteTransactionsId
+function setFavoriteTransaction(transaction) {
+  // transaction.id = favoriteTransactionsId
   return {
     type: SET_FAVORITE_TRANSACTION,
     transaction
@@ -115,7 +115,8 @@ export function removeFavoriteTransaction(transaction) {
 export function addFavoriteTransaction(transaction) {
   return function(dispatch, getState) {
     const state = getState()
-    favoriteTransactionsId = state.data.favoriteTransactions.length + 1
-    dispatch(setFavoriteTransaction(transaction, favoriteTransactionsId))
+    // favoriteTransactionsId = state.data.favoriteTransactions.length + 1
+    // dispatch(setFavoriteTransaction(transaction, favoriteTransactionsId))
+    dispatch(setFavoriteTransaction(transaction))
   }
 }

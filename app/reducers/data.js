@@ -16,7 +16,8 @@ const initialState = {
   currentMonthIndex: null,
   favoriteTransactions: [],
   visibleTransactions: [],
-  currentYear: new Date().getFullYear()
+  currentYear: new Date().getFullYear(),
+  favoriteTransactionsIdIndex: 0
 }
 
 export default function data (state = initialState, action) {
@@ -34,8 +35,13 @@ export default function data (state = initialState, action) {
       const nextTransactions = { ...state.transactions, [action.year]: action.data }
       return { ...state, transactions: nextTransactions }
     case SET_FAVORITE_TRANSACTION:
+      let transaction = action.transaction
+      transaction.id = state.favoriteTransactionsIdIndex
       nextFavoriteTransactions = state.favoriteTransactions.concat(action.transaction)
-      return { ...state, favoriteTransactions: nextFavoriteTransactions }
+      return {
+        ...state,
+        favoriteTransactions: nextFavoriteTransactions,
+        favoriteTransactionsIdIndex: state.favoriteTransactionsIdIndex + 1 }
     case DELETE_FAVORITE_TRANSACTION:
       nextFavoriteTransactions = state.favoriteTransactions.filter((transaction) =>
           transaction.id !== action.transaction.id)

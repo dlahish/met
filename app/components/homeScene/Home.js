@@ -89,6 +89,7 @@ class Home extends Component {
                 transactions={this.props.visibleTransactions}
                 getLayoutXY={this.getLayoutXY}
                 ref={(CurrentMonthTotal) => { this.CurrentMonthTotal = CurrentMonthTotal }}
+                currentMonthIndex={this.props.currentMonthIndex}
               />
           </View>
 
