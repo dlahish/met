@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component, PropTypes } from 'react'
-import { View, Text, TouchableHighlight, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, TouchableHighlight, StyleSheet, ScrollView, findNodeHandle } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Actions } from 'react-native-router-flux'
@@ -13,18 +13,24 @@ import {
   LoadingOverlay,
   ProgressBar
 } from '../../components'
+import HomeNavBar from './HomeNavBar'
+import FavBox from './FavBox'
 import * as accountActions from '../../actions/accounts'
 import * as dataActions from '../../actions/data'
 import * as formActions from '../../actions/form'
 import * as settingsActions from '../../actions/settings'
 import * as transactionsActions from '../../actions/transactions'
+var RCTUIManager = require('NativeModules').UIManager
 
 class Home extends Component {
   constructor (props) {
     super(props)
     this.state = {
-			isLoading: false
+			isLoading: false,
+      incomeXY: {x: null, y: null},
+      expenseXY: {x: null, y: null}
     }
+    this.boxes = [1,2,3,4,5]
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,32 +42,45 @@ class Home extends Component {
   }
 
   onAddNewFavortieTransaction = (favTransaction) => {
-    this.setState({ isLoading: true })
+    // this.setState({ isLoading: true })
     delete favTransaction['id']
     this.props.actions.data.addNewFavoriteTransaction(favTransaction)
   }
 
+  getLayoutXY = (event) => {
+    const handleIncome = findNodeHandle(this.CurrentMonthTotal.refs.incomeAmount)
+    const handleExpense = findNodeHandle(this.CurrentMonthTotal.refs.expenseAmount)
+    RCTUIManager.measure(handleIncome, (x, y, width, height, pageX, pageY) => {
+      this.setState({ incomeXY: { x: pageX, y: pageY - 10 } })
+    })
+    RCTUIManager.measure(handleExpense, (x, y, width, height, pageX, pageY) => {
+      this.setState({ expenseXY: { x: pageX, y: pageY - 10 } })
+    })
+  }
+
   render() {
+    console.log('HOME - render, this.state', this.state)
     return (
       <View style={styles.container}>
 
-          <CustomNavBar
+          <HomeNavBar
             onLeftPress={() => {}}
             onRightPress={() => {}}
             title={this.props.currentMonthName}
+            currentMonthIndex={this.props.currentMonthIndex}
           />
 
           <View style={styles.monthSummary}>
               <ChangeMonthArrows
                 onPressLeft={() =>
                   this.props.actions.data.setMonth('previous',
-                                                    this.props.currentMonthIndex,
-                                                    this.props.yearTotal,
-                                                    this.props.transactions)}
+                    this.props.currentMonthIndex,
+                    this.props.yearTotal,
+                    this.props.transactions)}
                 onPressRight={() => this.props.actions.data.setMonth('next',
-                                                                      this.props.currentMonthIndex,
-                                                                      this.props.yearTotal,
-                                                                      this.props.transactions)}
+                    this.props.currentMonthIndex,
+                    this.props.yearTotal,
+                    this.props.transactions)}
               />
 
               <ProgressBar transactions={this.props.visibleTransactions}/>
@@ -69,6 +88,8 @@ class Home extends Component {
               <CurrentMonthTotal
                 currencySymbol={this.props.currencySymbol}
                 transactions={this.props.visibleTransactions}
+                getLayoutXY={this.getLayoutXY}
+                ref={(CurrentMonthTotal) => { this.CurrentMonthTotal = CurrentMonthTotal }}
               />
           </View>
 
@@ -81,7 +102,16 @@ class Home extends Component {
                 favoriteTransactions={this.props.favoriteTransactions}
                 onAddNewFavortieTransaction={this.onAddNewFavortieTransaction}
                 customFavorites={this.props.customFavorites}
+                incomeXY={this.state.incomeXY}
+                expenseXY={this.state.expenseXY}
               />
+              {/* {this.props.favoriteTransactions.map((transaction, i) =>
+                <FavBox
+                  incomeXY={this.state.incomeXY}
+                  key={i}
+                  transaction={transaction}
+                />
+              )} */}
           </View>
 
           <View style={styles.addTransactionButtonsWrapper}>
@@ -143,6 +173,7 @@ const styles = StyleSheet.create({
   },
   favoriteTransactions: {
     flex: 1,
+    flexDirection: 'row',
     paddingTop: 10,
     paddingLeft: 15,
     paddingRight: 15

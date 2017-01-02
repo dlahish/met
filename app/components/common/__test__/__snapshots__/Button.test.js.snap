@@ -31,23 +31,24 @@ exports[`test renders correctly 1`] = `
     ]
   }
   testID={undefined}>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
+  <View
     style={
-      Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
         Object {
           "fontSize": 18,
-          "margin": 5,
-          "textAlign": "center",
-        },
-        Object {
-          "color": "#000",
-        },
-      ]
-    }>
-    Button Text
-  </Text>
+        }
+      }>
+      Button Text
+    </Text>
+  </View>
 </View>
 `;
