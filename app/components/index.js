@@ -41,6 +41,7 @@ import RowDatePicker from './common/formWidgets/widgets/RowDatePicker'
 import RowWidgetWithTitle from './common/formWidgets/widgets/RowWidgetWithTitle'
 import LoadingOverlay from './common/LoadingOverlay'
 import ProgressBar from './common/ProgressBar'
+import MetText from './common/MetText'
 
 import addBorder from './addBorder'
 
@@ -82,5 +83,6 @@ export {
   RowWidgetWithTitle,
   LoadingOverlay,
   ProgressBar,
-  CategoryIcons
+  CategoryIcons,
+  MetText
 }

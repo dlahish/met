@@ -11,7 +11,8 @@ import {
   ChangeMonthArrows,
   DisplayFavoriteTransactions,
   LoadingOverlay,
-  ProgressBar
+  ProgressBar,
+  MetText
 } from '../../components'
 import HomeNavBar from './HomeNavBar'
 import FavBox from './FavBox'
@@ -92,7 +93,7 @@ class Home extends Component {
           </View>
 
           <View style={[styles.titleWrapper, {borderBottomWidth: 1, borderBottomColor: '#b3b3b3'}]}>
-              <Text style={styles.titleText}>Favorites</Text>
+              <MetText styles={styles.titleText}>Favorites</MetText>
           </View>
 
           <View style={styles.favoriteTransactions}>
@@ -184,6 +185,6 @@ const styles = StyleSheet.create({
   titleText: {
     color: 'black',
     fontSize: 15,
-    fontWeight: '400'
+    fontWeight: '600'
   }
 })
