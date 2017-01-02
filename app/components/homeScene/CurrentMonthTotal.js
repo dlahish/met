@@ -44,6 +44,10 @@ export default class CurrentMonthTotal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.currentMonthIndex !== nextProps.currentMonthIndex) {
+      return
+    }
+
     if (this.props.transactions !== nextProps.transactions) {
       const nextIncome = getTotalBalace(nextProps.transactions, 'income', null, true)
       const income = getTotalBalace(this.props.transactions, 'income', null, true)
