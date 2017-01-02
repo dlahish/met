@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import { View, Text, StyleSheet, Animated } from 'react-native'
 import I18n from 'react-native-i18n'
 import ReactNativeI18n from 'react-native-i18n'
+import { MetText } from '../../components'
 
 function getTotalBalace(transactions, type, currencySymbol, returnNumber) {
   let totalBalance = 0, income = 0, expense = 0
@@ -80,43 +81,43 @@ export default class CurrentMonthTotal extends Component {
         ref={(CurrentMonthTotal) => { this.CurrentMonthTotal = CurrentMonthTotal}}
         onLayout={(e) => this.props.getLayoutXY(e)}>
           <View style={styles.titleWrapper}>
-              <Text style={styles.titleText}>Month Balance</Text>
+              <MetText styles={styles.titleText}>Month Balance</MetText>
           </View>
 
           <View style={styles.line}></View>
 
           <Animated.View style={[styles.textContainer, this.getViewAnim('incomeAmount')]} ref='view22'>
-            <Text style={[styles.text, {fontWeight: this.state.incomeFontWeight}]}>
+            <MetText style={[styles.text, {fontWeight: this.state.incomeFontWeight}]}>
               Income
-            </Text>
+            </MetText>
             <View>
-              <Text style={[styles.text, {fontWeight: this.state.incomeFontWeight}]} ref='incomeAmount'>
+              <MetText style={[styles.text, {fontWeight: this.state.incomeFontWeight}]} ref='incomeAmount'>
                 {getTotalBalace(this.props.transactions, 'income', this.props.currencySymbol)}
-              </Text>
+              </MetText>
             </View>
           </Animated.View>
 
           <Animated.View style={[styles.textContainer, this.getViewAnim('expenseAmount')]} ref='view22'>
-            <Text style={[styles.text, {fontWeight: this.state.expenseFontWeight}]}>
+            <MetText style={[styles.text, {fontWeight: this.state.expenseFontWeight}]}>
               Expense
-            </Text>
+            </MetText>
             <View>
-              <Text style={[styles.text, {fontWeight: this.state.expenseFontWeight}]} ref='expenseAmount'>
+              <MetText style={[styles.text, {fontWeight: this.state.expenseFontWeight}]} ref='expenseAmount'>
                 {getTotalBalace(this.props.transactions, 'expense', this.props.currencySymbol)}
-              </Text>
+              </MetText>
             </View>
           </Animated.View>
 
           <View style={[styles.line, {marginHorizontal: 15}]}></View>
 
           <View style={styles.textContainer}>
-            <Text style={styles.text}>
+            <MetText style={styles.text}>
               Total
-            </Text>
+            </MetText>
             <View ref='view33'>
-              <Text style={styles.text}>
+              <MetText style={styles.text}>
                 {getTotalBalace(this.props.transactions, 'balance', this.props.currencySymbol)}
-              </Text>
+              </MetText>
             </View>
           </View>
 
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: 'black',
     fontSize: 15,
-    fontWeight: '400'
+    fontWeight: '600'
   },
   line: {
     height: 1,

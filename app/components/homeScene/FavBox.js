@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   findNodeHandle
 } from 'react-native'
+import { MetText } from '../../components'
 var RCTUIManager = require('NativeModules').UIManager
 
 export default class FavBox extends Component {
@@ -86,7 +87,7 @@ export default class FavBox extends Component {
           ref='box'
           style={[styles.box, {backgroundColor: this.props.color}, this.getAnimStyle(this.props.info)]}
           onLayout={(e) => this.getLayoutXY(e,1)}>
-          <Text style={styles.text}>{this.props.text} {this.props.info}</Text>
+          <MetText styles={styles.text}>{this.props.text} {this.props.info}</MetText>
         </Animated.View>
       </TouchableOpacity>
     )
