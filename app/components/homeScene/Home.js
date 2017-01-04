@@ -14,6 +14,7 @@ import {
   ProgressBar,
   MetText
 } from '../../components'
+import MetHeader from '../common/MetHeader'
 import HomeNavBar from './HomeNavBar'
 import FavBox from './FavBox'
 import * as accountActions from '../../actions/accounts'
@@ -62,12 +63,22 @@ class Home extends Component {
     return (
       <View style={styles.container}>
 
-          <HomeNavBar
+          {/* <HomeNavBar
             onLeftPress={() => {}}
             onRightPress={() => {}}
             title={this.props.currentMonthName}
             currentMonthIndex={this.props.currentMonthIndex}
-          />
+          /> */}
+          <MetHeader
+            style={styles.header}>
+            <View style={styles.headerContent}>
+              <Text style={styles.title}>
+                <Text style={styles.day}>DAY this.state.day</Text>
+                {'\n'}
+                <Text style={styles.time}>sectionTitle</Text>
+              </Text>
+            </View>
+          </MetHeader>
 
           <View style={styles.monthSummary}>
               <ChangeMonthArrows
@@ -187,5 +198,31 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 15,
     fontWeight: '600'
-  }
+  },
+  headerContent: {
+    // android: {
+    //   flex: 1,
+    //   alignItems: 'flex-start',
+    //   justifyContent: 'center',
+    // },
+    // ios: {
+    //   height: 65,
+    //   alignItems: 'center',
+    //   justifyContent: 'center',
+    // },
+  },
+  day: {
+    // ios: {
+    //   fontWeight: 'bold',
+    // },
+    // android: {
+    //   fontSize: 9,
+    // },
+  },
+  time: {
+    // android: {
+    //   fontWeight: 'bold',
+    //   fontSize: 17,
+    // }
+  },
 })
