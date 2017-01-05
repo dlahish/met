@@ -63,13 +63,13 @@ class Home extends Component {
     return (
       <View style={styles.container}>
 
-          <HomeNavBar
+          {/* <HomeNavBar
             onLeftPress={() => {}}
             onRightPress={() => {}}
             title={this.props.currentMonthName}
             currentMonthIndex={this.props.currentMonthIndex}
-          />
-          {/* <MetHeader
+          /> */}
+          <MetHeader
             style={styles.header}>
             <View style={styles.headerContent}>
               <Text style={styles.title}>
@@ -78,7 +78,7 @@ class Home extends Component {
                 <Text style={styles.time}>sectionTitle</Text>
               </Text>
             </View>
-          </MetHeader> */}
+          </MetHeader>
 
           <View style={styles.monthSummary}>
               <ChangeMonthArrows
