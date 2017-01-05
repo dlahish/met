@@ -98,7 +98,6 @@ export default class ListContainer extends Component {
             {this.renderParallaxContent()}
           </ParallaxBackground>
           <MetHeader
-            // title={'this.props.title'}
             // leftItem={leftItem}
             // rightItem={this.props.rightItem}
             // extraItems={this.props.extraItems}
