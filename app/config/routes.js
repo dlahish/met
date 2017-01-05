@@ -28,6 +28,7 @@ import {
   NewReminder,
   CategoryIcons
 } from '../components'
+import HomeView from '../components/homeScene/HomeView'
 import Icon from 'react-native-vector-icons/FontAwesome'
 const plusIcon = (<Icon name='plus' size={26} color='#FFF' />)
 
@@ -83,7 +84,7 @@ class Routes extends Component {
                   <Scene
                     key="home"
                     title="Home"
-                    component={Home}
+                    component={HomeView}
                     icon={TabIcon}
                     hideNavBar={true}
                   />

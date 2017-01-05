@@ -104,5 +104,6 @@ const styles = StyleSheet.create({
 })
 
 const Header = Platform.OS === 'ios' ? MetHeaderIOS : MetHeaderAndroid
+Header.height = HEADER_HEIGHT
 
 export default Header
