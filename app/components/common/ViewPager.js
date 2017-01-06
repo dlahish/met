@@ -12,21 +12,32 @@ export default class ViewPager extends Component {
   }
 
   handleScroll = (e) => {
-    console.log('nativeEvent contentOffset', e.nativeEvent.contentOffset)
-    // this.state.scrollValue.setValue(e.nativeEvent)
+    this.state.scrollAnim.setValue(e.nativeEvent.contentOffset.y)
   }
 
   render() {
+    const transform = {
+      // transform: [{
+      //   opacity: this.state.scrollAnim.interpolate({
+      //     inputRange: [0, 100],
+      //     outputRange: [1, 0]
+      //   })
+      // }]
+      opacity: this.state.scrollAnim.interpolate({
+        inputRange: [-100, 0, 100],
+        outputRange: [0, 1, 0]
+      })
+    }
+
     return (
       <View style={{flex: 1}}>
-        <View style={styles.headers}>
+        <Animated.View style={[styles.headers, transform]}>
 
-        </View>
+        </Animated.View>
         <ViewPagerContent
           onScroll={this.handleScroll}
           style={styles.content}>
-          {/* {this.props.children} */}
-          <View><Text>Hello Content</Text></View>
+          {this.props.children}
         </ViewPagerContent>
       </View>
     )
@@ -34,5 +45,11 @@ export default class ViewPager extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  headers: {
+    height: 56,
+    backgroundColor: 'blue'
+  },
+  content: {
+    flex: 1,
+  }
 })

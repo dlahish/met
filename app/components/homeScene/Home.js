@@ -62,12 +62,12 @@ class Home extends Component {
     return (
       <View style={styles.container}>
 
-          <HomeNavBar
+          {/* <HomeNavBar
             onLeftPress={() => {}}
             onRightPress={() => {}}
             title={this.props.currentMonthName}
             currentMonthIndex={this.props.currentMonthIndex}
-          />
+          /> */}
 
           <View style={styles.monthSummary}>
               <ChangeMonthArrows
